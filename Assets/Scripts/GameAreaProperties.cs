@@ -16,7 +16,8 @@ public class GameAreaProperties : MonoBehaviour
     public Rect gameplayArea;
 
 
-    public int initialPlatformVerticalPosition;
+    //position of the intiail platform relative to the bottom of the play area
+    public int initialPlatformVerticalPositionFromBottomOfPlayArea;
 
     private static GameAreaProperties _instance;
 

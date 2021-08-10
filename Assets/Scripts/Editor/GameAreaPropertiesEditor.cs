@@ -23,6 +23,19 @@ public class GameAreaPropertiesEditor : Editor
 
     }
 
+    static GUIStyle defaultTextStyle
+    {
+        get
+        {
+            GUIStyle style = new GUIStyle();
+            style.fontSize = 20;
+            style.fixedWidth = 250;
+            style.alignment = TextAnchor.MiddleCenter;
+            style.normal.textColor = Color.white;
+            return style;
+        }
+    }
+
     //draw a rect to display the spawner area
     [DrawGizmo(GizmoType.Selected | GizmoType.NonSelected | GizmoType.Pickable)]
     static void DrawAreaBoundsDisplayGizmo(GameAreaProperties properties, GizmoType gizmoType)
@@ -33,7 +46,7 @@ public class GameAreaPropertiesEditor : Editor
         style.alignment = TextAnchor.MiddleCenter;
         style.normal.textColor = Color.white;
 
-        Handles.Label(properties.transform.position, "Game Area", style);
+        Handles.Label(properties.transform.position, "Game Area", defaultTextStyle);
 
         Gizmos.color = new Color(0.4f, 0.8f, 0, 0.3f);
 
@@ -66,9 +79,33 @@ public class GameAreaPropertiesEditor : Editor
             newGameArea.size = new Vector2(boundsHandle.size.x, boundsHandle.size.y);
             properties.gameplayArea = newGameArea;
 
-            
+
             Undo.RecordObject(properties.transform, "Changed Game Area Bounds position");
             properties.transform.position = boundsHandle.center;
         }
+
+        float sizeOfMoveHandle = HandleUtility.GetHandleSize(properties.transform.position) / 4;
+
+        Handles.color = Color.red;
+        EditorGUI.BeginChangeCheck();
+
+        //move the position of the base platform
+        Vector3 basePlatformPosition = new Vector3(properties.transform.position.x,
+            properties.transform.position.y + properties.initialPlatformVerticalPositionFromBottomOfPlayArea,
+            properties.transform.position.z);
+        Vector3 newPosition = Handles.FreeMoveHandle(basePlatformPosition, Quaternion.identity, sizeOfMoveHandle, new Vector3(0, 1, 0), Handles.CubeHandleCap);
+
+        if (EditorGUI.EndChangeCheck())
+        {
+            Undo.RecordObject(properties, "Changed initial platform vertical position");
+            properties.initialPlatformVerticalPositionFromBottomOfPlayArea = (int)(newPosition.y - properties.transform.position.y);
+        }
+
+        //draw a line to represent the position of the base
+        Vector3 platformHeightIndicatorLeft = new Vector3(properties.gameplayArea.xMin, properties.initialPlatformVerticalPositionFromBottomOfPlayArea, properties.transform.position.z);
+        Vector3 platformHeightIndicatorRight = new Vector3(properties.gameplayArea.xMax, properties.initialPlatformVerticalPositionFromBottomOfPlayArea, properties.transform.position.z);
+        Handles.DrawLine(platformHeightIndicatorLeft, platformHeightIndicatorRight, 3);
+
+        Handles.Label(platformHeightIndicatorLeft + new Vector3(properties.gameplayArea.width / 3, 0, 0), "Base Platform Position", defaultTextStyle);
     }
 }
