@@ -8,8 +8,8 @@ using UnityEditor.IMGUI.Controls;
 //https://learn.unity.com/tutorial/editor-scripting#5c7f8528edbc2a002053b5fb
 
 //render the spawn area box bounds inside scene view, and make it easy to edit
-[CustomEditor(typeof(GameAreaProperties))]
-public class GameAreaPropertiesEditor : Editor
+[CustomEditor(typeof(GameAreaConfiguration))]
+public class GameAreaConfigurationEditor : Editor
 {
     private BoxBoundsHandle boundsHandle = new BoxBoundsHandle();
 
@@ -38,7 +38,7 @@ public class GameAreaPropertiesEditor : Editor
 
     //draw a rect to display the spawner area
     [DrawGizmo(GizmoType.Selected | GizmoType.NonSelected | GizmoType.Pickable)]
-    static void DrawAreaBoundsDisplayGizmo(GameAreaProperties properties, GizmoType gizmoType)
+    static void DrawAreaBoundsDisplayGizmo(GameAreaConfiguration properties, GizmoType gizmoType)
     {
         GUIStyle style = new GUIStyle();
         style.fontSize = 25;
@@ -56,7 +56,7 @@ public class GameAreaPropertiesEditor : Editor
     public void OnSceneGUI()
     {
         //rect to specify the gameplay area
-        GameAreaProperties properties = (target as GameAreaProperties);
+        GameAreaConfiguration properties = (target as GameAreaConfiguration);
 
         Rect gameArea = properties.gameplayArea;
 
@@ -91,19 +91,19 @@ public class GameAreaPropertiesEditor : Editor
 
         //move the position of the base platform
         Vector3 basePlatformPosition = new Vector3(properties.transform.position.x,
-            properties.transform.position.y + properties.initialPlatformVerticalPositionFromBottomOfPlayArea,
+            properties.transform.position.y + properties.initialPlatformVerticalPositionFromGameAreaCenter,
             properties.transform.position.z);
         Vector3 newPosition = Handles.FreeMoveHandle(basePlatformPosition, Quaternion.identity, sizeOfMoveHandle, new Vector3(0, 1, 0), Handles.CubeHandleCap);
 
         if (EditorGUI.EndChangeCheck())
         {
             Undo.RecordObject(properties, "Changed initial platform vertical position");
-            properties.initialPlatformVerticalPositionFromBottomOfPlayArea = (int)(newPosition.y - properties.transform.position.y);
+            properties.initialPlatformVerticalPositionFromGameAreaCenter = (int)(newPosition.y - properties.transform.position.y);
         }
 
         //draw a line to represent the position of the base
-        Vector3 platformHeightIndicatorLeft = new Vector3(properties.gameplayArea.xMin, properties.initialPlatformVerticalPositionFromBottomOfPlayArea, properties.transform.position.z);
-        Vector3 platformHeightIndicatorRight = new Vector3(properties.gameplayArea.xMax, properties.initialPlatformVerticalPositionFromBottomOfPlayArea, properties.transform.position.z);
+        Vector3 platformHeightIndicatorLeft = new Vector3(properties.gameplayArea.xMin, basePlatformPosition.y, properties.transform.position.z);
+        Vector3 platformHeightIndicatorRight = new Vector3(properties.gameplayArea.xMax, basePlatformPosition.y, properties.transform.position.z);
         Handles.DrawLine(platformHeightIndicatorLeft, platformHeightIndicatorRight, 3);
 
         Handles.Label(platformHeightIndicatorLeft + new Vector3(properties.gameplayArea.width / 3, 0, 0), "Base Platform Position", defaultTextStyle);

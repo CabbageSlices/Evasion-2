@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class GameAreaProperties : MonoBehaviour
+public class GameAreaConfiguration : MonoBehaviour
 {
     //specifies the size of a block relative to unity's unit
     //eg.in unity a distance of 1 means this many pixels
@@ -16,12 +16,12 @@ public class GameAreaProperties : MonoBehaviour
     public Rect gameplayArea;
 
 
-    //position of the intiail platform relative to the bottom of the play area
-    public int initialPlatformVerticalPositionFromBottomOfPlayArea;
+    //position of the intiail platform relative to the center of the play area
+    public int initialPlatformVerticalPositionFromGameAreaCenter;
 
-    private static GameAreaProperties _instance;
+    private static GameAreaConfiguration _instance;
 
-    public static GameAreaProperties Instance { get { return _instance; }}
+    public static GameAreaConfiguration Instance { get { return _instance; }}
 
     private void Awake() {
         
