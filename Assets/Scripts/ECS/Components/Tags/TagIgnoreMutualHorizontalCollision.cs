@@ -3,9 +3,10 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 
+//if two objects ocllide and both have this tag, any horizontal collision between them will be ignored
 [Serializable]
 [GenerateAuthoringComponent]
-public struct TagRandomColourOnInitComponent : IComponentData
+public struct TagIgnoreMutualHorizontalCollision : IComponentData
 {
     // Add fields to your component here. Remember that:
     //

@@ -8,8 +8,8 @@ using Unity.Mathematics;
 public struct TetrisPiece : IComponentData
 {
     //falling velocity of this block.
-    float velocity;
+    public float velocity;
 
     //color to assign to all sub blocks, same color is assigned to all blocks that make up this piece.
-    float3 color;
+    public float4 color;
 }

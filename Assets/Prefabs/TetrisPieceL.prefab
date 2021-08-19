@@ -13,6 +13,9 @@ GameObject:
   - component: {fileID: 1575717557313293410}
   - component: {fileID: 8097140124552004605}
   - component: {fileID: 1247901225508094873}
+  - component: {fileID: -8797434436350594185}
+  - component: {fileID: 3849091486216389438}
+  - component: {fileID: -8732614289803540944}
   m_Layer: 0
   m_Name: TetrisPieceL
   m_TagString: Untagged
@@ -52,7 +55,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MotionType: 0
   m_Smoothing: 0
-  m_Mass: 1
+  m_Mass: 2
   m_LinearDamping: 0
   m_AngularDamping: 0
   m_InitialLinearVelocity:
@@ -63,7 +66,7 @@ MonoBehaviour:
     x: 0
     y: 0
     z: 0
-  m_GravityFactor: 0
+  m_GravityFactor: 1
   m_OverrideDefaultMassDistribution: 1
   m_CenterOfMass:
     x: 0
@@ -123,6 +126,48 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2e2a9bc4f657f4c47981c5af40a53fa4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  velocity: 0
+  color:
+    x: 0
+    y: 0
+    z: 0
+    w: 0
+--- !u!114 &-8797434436350594185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2810638203594732742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 090f08a85a80d354d8cac36c617d1ae1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3849091486216389438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2810638203594732742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b07ba2f5de940aa4681dcfb7eea9f796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-8732614289803540944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2810638203594732742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d78fd2a0a9d9a54c950bcfd5f0d76fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &653172234155353865

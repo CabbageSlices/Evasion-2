@@ -21,7 +21,7 @@ public class RNGManagerSystem : SystemBase
         Unity.Mathematics.Random[] rngs = new Unity.Mathematics.Random[maxJobWorkers];
 
         for(int i = 0; i < maxJobWorkers; ++i) {
-            rngs[i] = new Unity.Mathematics.Random( (uint)(i + 1) * 2);
+            rngs[i] = new Unity.Mathematics.Random( (uint)(i + 1) * 134);
         }
 
         randomNumberGenerators = new NativeArray<Unity.Mathematics.Random>(rngs, Allocator.Persistent);

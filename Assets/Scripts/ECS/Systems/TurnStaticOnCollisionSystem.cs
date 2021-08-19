@@ -47,10 +47,14 @@ public class TurnStaticOnCollisionSystem : SystemBase
         ecbs.AddJobHandleForProducer(Dependency);
     }
 
+    [BurstCompile]
     struct CollisionEventTurnStaticJob : ICollisionEventsJob
     {
 
+        [ReadOnly]
         public ComponentDataFromEntity<TagTurnStaticOnCollision> entitiesToTurnStatic;
+        
+        [ReadOnly]
         public ComponentDataFromEntity<TagStatic> staticEntities;
 
         public EntityCommandBuffer ecb;
@@ -66,6 +70,10 @@ public class TurnStaticOnCollisionSystem : SystemBase
             bool isEntityAStatic = staticEntities.HasComponent(entityA);
             bool isEntityBStatic = staticEntities.HasComponent(entityB);
 
+            if(UnityEngine.Mathf.Abs(collisionEvent.Normal.x) > 0.15) {
+                return;
+            }
+
             if (entityATurnStatic && isEntityBStatic)
             {
                 turnEntityStatic(entityA);
@@ -79,11 +87,11 @@ public class TurnStaticOnCollisionSystem : SystemBase
         void turnEntityStatic(Entity entity)
         {
             ecb.AddComponent(entity, new TagStatic());
-            ecb.RemoveComponent<TagTurnStaticOnCollision>(entity);
+            // ecb.RemoveComponent<TagTurnStaticOnCollision>(entity);
             ecb.RemoveComponent<PhysicsVelocity>(entity);
-            ecb.RemoveComponent<PhysicsMass>(entity);
-            ecb.RemoveComponent<PhysicsDamping>(entity);
-            ecb.RemoveComponent<PhysicsGravityFactor>(entity);
+            // ecb.RemoveComponent<PhysicsMass>(entity);
+            // ecb.RemoveComponent<PhysicsDamping>(entity);
+            // ecb.RemoveComponent<PhysicsGravityFactor>(entity);
         }
     }
 }

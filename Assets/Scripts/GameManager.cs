@@ -3,15 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Entities;
 using Unity.Transforms;
+using Unity.Physics;
 
 public struct GameAreaProperties {
-    int gameAreaLeft;
-    int gameAreaRight;
-    int gameAreaTop;
-    int gameAreaBottom;
+    public int gameAreaLeft;
+    public int gameAreaRight;
+    public int gameAreaTop;
+    public int gameAreaBottom;
 
-    int sizeOfSideGaps;
-    int basePlatformWidth;
+    public int sizeOfSideGaps;
+    public int basePlatformWidth;
+    public int basePlatformLeft;
+    public int basePlatformBottom;
+
+    public int blockSpawnBoundsLeft;
+    public int blockSpawnBoundsRight; //right edge of the spawn region, this cell SHOULDn'T have a block spawn here since the block will be off screen.
 }
 
 [RequireComponent(typeof(GameAreaConfiguration))]
@@ -30,7 +36,22 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private bool gameStarted = false;
+    public bool gameStarted {
+        get;
+        private set;
+    } = false;
+
+    public bool gameInitialized {
+        get;
+        private set;
+    } = false;
+
+    public GameAreaProperties gameProperties {
+        get;
+        private set;
+    }
+
+
 
     // Start is called before the first frame update
     void Awake()
@@ -62,38 +83,62 @@ public class GameManager : MonoBehaviour
     //spawn players, create UI ffor players, blah blah blah
     public void startGame() {
         
-        EntityManager entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-        
-        GameObjectConversionSettings settings = GameObjectConversionSettings.FromWorld(World.DefaultGameObjectInjectionWorld, blobAssetStore);
-        Entity basePlatformEntity = GameObjectConversionUtility.ConvertGameObjectHierarchy(basePlatformPrefab, settings);
-
-        
         Rect gameplayArea = GameAreaConfiguration.Instance.gameplayArea;
         
         int gameAreaBottom = Mathf.FloorToInt(gameplayArea.yMin);
         int gameAreaTop = Mathf.CeilToInt(gameplayArea.yMax);
         int gameAreaHeight = gameAreaTop - gameAreaBottom;
         int gameAreaVerticalCenter = Mathf.FloorToInt(gameplayArea.center.y);
-        int gameAreaStartingPosition = Mathf.FloorToInt(gameplayArea.xMin);
+        int gameAreaLeft = Mathf.FloorToInt(gameplayArea.xMin);
+        int gameAreaRight = Mathf.CeilToInt(gameplayArea.xMax);
 
         //calculate game bounds
-        int gameAreaWidth =  Mathf.CeilToInt(gameplayArea.xMax) - Mathf.FloorToInt(gameplayArea.xMin);
+        int gameAreaWidth =  gameAreaRight - gameAreaLeft;
 
         //10%  of the playable region should be free on either side  for players to fall of fand die
         int sizeOfSideGaps = Mathf.FloorToInt(gameAreaWidth * 0.1f);
 
-        int basePlatformLeft = gameAreaStartingPosition + sizeOfSideGaps;
+        int basePlatformLeft = gameAreaLeft + sizeOfSideGaps;
         int basePlatformWidth = gameAreaWidth - sizeOfSideGaps * 2;//multiply by two since theres a gap on either side
         int basePlatformBottom = gameAreaVerticalCenter + GameAreaConfiguration.Instance.initialPlatformVerticalPositionFromGameAreaCenter;
+
+        gameProperties = new GameAreaProperties {
+            gameAreaLeft = gameAreaLeft,
+             gameAreaRight = gameAreaRight,
+             gameAreaTop = gameAreaTop,
+             gameAreaBottom = gameAreaBottom,
+
+             sizeOfSideGaps = sizeOfSideGaps,
+             basePlatformWidth = basePlatformWidth,
+             basePlatformLeft = basePlatformLeft,
+             basePlatformBottom = basePlatformBottom,
+
+             blockSpawnBoundsLeft = basePlatformLeft,
+             blockSpawnBoundsRight = basePlatformLeft + basePlatformWidth,
+        };
+
+        createBasePlatform();
+
+        gameInitialized = true;
+    }
+
+    private void createBasePlatform() {
+
+        EntityManager entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
+        
+        GameObjectConversionSettings settings = GameObjectConversionSettings.FromWorld(World.DefaultGameObjectInjectionWorld, blobAssetStore);
+        Entity basePlatformEntity = GameObjectConversionUtility.ConvertGameObjectHierarchy(basePlatformPrefab, settings);
 
         //spawn platform
         Entity basePlatformInstance = entityManager.Instantiate(basePlatformEntity);
 
         //set platform position
-        entityManager.SetComponentData<Translation>(basePlatformInstance, new Translation{ Value = new Vector3(basePlatformLeft, basePlatformBottom, 0)});
-        entityManager.AddComponentData<NonUniformScale>(basePlatformInstance, new NonUniformScale{ Value = new Vector3(basePlatformWidth, 1, 1)});
+        entityManager.SetComponentData<Translation>(basePlatformInstance, new Translation{ Value = new Vector3(gameProperties.basePlatformLeft, gameProperties.basePlatformBottom, 0)});
+        entityManager.AddComponentData<NonUniformScale>(basePlatformInstance, new NonUniformScale{ Value = new Vector3(gameProperties.basePlatformWidth, 1, 1)});
+        entityManager.RemoveComponent<PhysicsVelocity>(basePlatformInstance);
+    }
 
-
-        gameStarted = true;
+    private void createBlockSpawner() {
+        
     }
 }
