@@ -21,7 +21,6 @@ public class Force2DTetrisPhysicsSystem : SystemBase
         Entities.WithAll<TagForce2DTetrisPhysics>().ForEach((ref Translation translation, ref Rotation rotation) =>
         {
             translation.Value = new float3(translation.Value.x, translation.Value.y, 0);
-            translation.Value.z = 0;
 
             rotation.Value = quaternion.identity;
         }).ScheduleParallel();

@@ -50,7 +50,8 @@ public class TetrisPieceSpawnSystem : SystemBase
                 int2 spawnPosition = new int2(rng.NextInt(spawnBounds.left, spawnBounds.right), UnityEngine.Mathf.RoundToInt(translation.Value.y));
 
                 int numPossiblePieces = tetrisPieces.Length;
-                Entity toSpawn = tetrisPieces[0].tetrisPiece;
+                int indexPieceToSpawn = rng.NextInt(0, numPossiblePieces);
+                Entity toSpawn = tetrisPieces[indexPieceToSpawn].tetrisPiece;
 
                 //ensure that block is spawned within the bounds
                 Collider * collider = colliders[toSpawn].ColliderPtr;

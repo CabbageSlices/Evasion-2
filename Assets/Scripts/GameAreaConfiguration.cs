@@ -9,9 +9,6 @@ public class GameAreaConfiguration : MonoBehaviour
     //eg.in unity a distance of 1 means this many pixels
     public int unityUnitToBlockSize = 32;
 
-    //initial height that blocks will spawn at
-    public int initialBlockSpawnHeight;
-
     //set to the game area so it can auto calculate the number of columns, horizontal location of the base platform, etc.
     public Rect gameplayArea;
 
