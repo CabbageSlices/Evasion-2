@@ -23,25 +23,29 @@ public class Force2DTetrisPhysicsSystem : SystemBase
             translation.Value = new float3(translation.Value.x, translation.Value.y, 0);
 
             rotation.Value = quaternion.identity;
-        }).ScheduleParallel();
+        }).WithoutBurst().Schedule();
 
         //might not have a velocity 
+        //disable rotational velocity
         Entities.WithAll<TagForce2DTetrisPhysics>().ForEach((ref PhysicsVelocity velocity) =>
         {
             velocity.Linear.z = 0;
             velocity.Angular.x = 0;
             velocity.Angular.y = 0;
+            velocity.Angular.z = 0;
         }).ScheduleParallel();
 
         //force terminal velocity
         Entities.WithAll<TagForce2DTetrisPhysics>().ForEach((ref PhysicsVelocity velocity) =>
         {
-            if(velocity.Linear.y < -50) {
-                velocity.Linear.y = -50;
+            if (velocity.Linear.y < -60)
+            {
+                velocity.Linear.y = -60;
             }
 
-            if(velocity.Linear.y > 50) {
-                velocity.Linear.y = 50;
+            if (velocity.Linear.y > 60)
+            {
+                velocity.Linear.y = 60;
             }
         }).ScheduleParallel();
 
@@ -53,7 +57,8 @@ public class Force2DTetrisPhysicsSystem : SystemBase
 
             //velocity is negative, so if block is falling SLOWER (more positive = slower), then force fall to default velocity.
             //this allows block to fall faster than usuall due to collisions, but NEVER slower
-            if(velocity.Linear.y > piece.velocity) {
+            if (velocity.Linear.y > piece.velocity)
+            {
                 velocity.Linear.y = piece.velocity;
             }
         }).ScheduleParallel();
