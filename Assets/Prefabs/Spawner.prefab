@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3143513738610175970}
   - component: {fileID: 3143513738610175980}
   m_Layer: 0
-  m_Name: Spawner 1
+  m_Name: Spawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -90,7 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e96130bab2f98b4488c1a3d0b2268505, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delayUntilNextSpawn: 0.5
+  delayUntilNextSpawn: 5
   timeLastSpawnAt: 0
 --- !u!114 &3143513738610175980
 MonoBehaviour:

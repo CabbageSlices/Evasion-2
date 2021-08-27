@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Entities;
 using Unity.Transforms;
+using UnityEngine.InputSystem;
 using Unity.Physics;
 
 public struct GameInstanceData {
@@ -87,7 +88,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space) && !gameStarted) {
+        if(Keyboard.current.spaceKey.wasPressedThisFrame && !gameStarted) {
             startGame();
         }
 
@@ -142,6 +143,7 @@ public class GameManager : MonoBehaviour
         createTetrisPieceSpawner();
 
         gameInitialized = true;
+        gameStarted = true;
     }
 
     unsafe private void createBasePlatform() {
