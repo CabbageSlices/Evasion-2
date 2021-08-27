@@ -33,6 +33,18 @@ public class Force2DTetrisPhysicsSystem : SystemBase
             velocity.Angular.y = 0;
         }).ScheduleParallel();
 
+        //force terminal velocity
+        Entities.WithAll<TagForce2DTetrisPhysics>().ForEach((ref PhysicsVelocity velocity) =>
+        {
+            if(velocity.Linear.y < -50) {
+                velocity.Linear.y = -50;
+            }
+
+            if(velocity.Linear.y > 50) {
+                velocity.Linear.y = 50;
+            }
+        }).ScheduleParallel();
+
         //force tetris pieces to fall ATLEAST as fast as their initial velocity
         Entities.WithAll<TagForce2DTetrisPhysics>().WithNone<TagUninitialized, TagStatic>().ForEach((ref PhysicsVelocity velocity, in TetrisPiece piece) =>
         {

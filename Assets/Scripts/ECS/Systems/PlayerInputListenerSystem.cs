@@ -43,9 +43,10 @@ public class PlayerInputListenerSystem : SystemBase
     {
         //reset the flag since we should be running in a new frame now so it's no longer pressed this single frame, unless he presses it again.
         //in which case it will be handleed 
-        playerInput.isJumpKeyPressedThisFrame = false;
+        playerInput.setJumpKeyPressedThisFrame(false);
 
-        if(actions.Length == 0) {
+        if (actions.Length == 0)
+        {
             return;
         }
 
@@ -59,14 +60,14 @@ public class PlayerInputListenerSystem : SystemBase
             {
                 if (action.phase == UnityEngine.InputSystem.InputActionPhase.Performed)
                 {
-                    playerInput.isJumpKeyPressedThisFrame = true;
+                    playerInput.setJumpKeyPressedThisFrame(true);
                     playerInput.isJumpKeyHeld = true;
                     playerInput.jumpKeyPressStartTime = action.timeActionOccured;
                 }
                 else
                 if (action.phase == UnityEngine.InputSystem.InputActionPhase.Canceled)
                 {
-                    playerInput.isJumpKeyPressedThisFrame = false;
+                    playerInput.setJumpKeyPressedThisFrame(false);
                     playerInput.isJumpKeyHeld = false;
                 }
             }
@@ -105,7 +106,8 @@ public class PlayerInputListenerSystem : SystemBase
 
             playerInput.inputDirection = float2.zero;
 
-            if(currentPlayerInputStates.ContainsKey(index)) {
+            if (currentPlayerInputStates.ContainsKey(index))
+            {
 
                 PlayerStateInput stateInput = currentPlayerInputStates[index];
                 playerInput.inputDirection = stateInput.moveDirection;
