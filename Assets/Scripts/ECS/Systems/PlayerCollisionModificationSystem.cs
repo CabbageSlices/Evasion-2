@@ -14,6 +14,9 @@ using Unity.Mathematics;
 //horizontal collision box is wider than the vertical, and only collides horizontally.
 //vertical collision box is taller and only collides vertically
 //this way corner of player doens't "snag" along corners
+
+//ISSUES WITH THIS, you get some diagnoal collisions being ignored becuase the collider is a cross shape, so if you collide against the corner of a block, you'll go inside it before
+//the colliders actually overlap
 [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
 [UpdateBefore(typeof(StepPhysicsWorld))]
 public class PlayerCollisionModificationSystem : SystemBase
@@ -92,6 +95,7 @@ public class PlayerCollisionModificationSystem : SystemBase
 
             float3 collisionNormal = header.Normal;
 
+            //have ot use world.bodies because using componentDataFromEntity to get the rigidBody doesn't seem to return colliders properly
             var body = world.Bodies[playerBodyIndex];
             var collider = (CompoundCollider*)body.Collider.GetUnsafePtr();
 

@@ -7,7 +7,7 @@ using Unity.Transforms;
 using Unity.Physics;
 
 [UpdateInGroup(typeof(InputSystemGroup))]
-[UpdateAfter(typeof(PlayerInputListenerSystem))]
+[UpdateBefore(typeof(PlayerInputListenerSystem))]
 public class PlayerInputHandlerSystem : SystemBase
 {
     protected override void OnUpdate()
@@ -25,7 +25,7 @@ public class PlayerInputHandlerSystem : SystemBase
 
 
 
-        Entities.WithAll<TagPlayer>().ForEach((Entity entity, ref PlayerInputComponent input, ref PhysicsVelocity velocity, in MovementParametersComponent movementParameters) =>
+        Entities.WithAll<TagPlayer>().ForEach((Entity entity, ref PlayerInputComponent input, ref PhysicsVelocity velocity, ref GameplayState state, in MovementParametersComponent movementParameters) =>
         {
             //full speed left and right
             float horizontalDirection = input.inputDirection.x > 0.1 ? 1 : (input.inputDirection.x < -0.1 ? -1 : 0);
@@ -33,8 +33,9 @@ public class PlayerInputHandlerSystem : SystemBase
 
             velocity.Linear = new float3(horizontalSpeed, velocity.Linear.y, velocity.Linear.z);
 
-            if (input.isJumpKeyPressedThisFrame && !input.isJumpPressHandeled)
+            if (input.isJumpKeyPressedThisFrame && !input.isJumpPressHandeled && state.isGrounded)
             {
+                state.isGrounded = false;
                 velocity.Linear.y = movementParameters.jumpSpeed;
             }
 
