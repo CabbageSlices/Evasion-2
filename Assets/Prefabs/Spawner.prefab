@@ -90,7 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e96130bab2f98b4488c1a3d0b2268505, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delayUntilNextSpawn: 5
+  delayUntilNextSpawn: 11
   timeLastSpawnAt: 0
 --- !u!114 &3143513738610175980
 MonoBehaviour:

@@ -23,6 +23,10 @@ PrefabInstance:
       propertyPath: m_GravityFactor
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5536416586890363157, guid: 6e039d7ebe0f1694d97debdf1df91665, type: 3}
+      propertyPath: m_OverrideDefaultMassDistribution
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8043875728671666188, guid: 6e039d7ebe0f1694d97debdf1df91665, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -67,5 +71,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 6e039d7ebe0f1694d97debdf1df91665, type: 3}

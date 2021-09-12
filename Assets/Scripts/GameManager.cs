@@ -88,7 +88,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Keyboard.current.spaceKey.wasPressedThisFrame && !gameStarted) {
+        if(!gameStarted) {
             startGame();
         }
 

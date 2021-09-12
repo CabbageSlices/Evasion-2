@@ -68,11 +68,10 @@ public class PlayerInputHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // if(jumpActionTrace.count != 0 || moveDirection.sqrMagnitude > 0.05) {
+        if(parameters.moveDirection.sqrMagnitude > 0.05) {
 
-        //     Debug.Log(moveDirection);
-        //     Debug.Log(jumpActionTrace.count);
-        // }
+            // Debug.Log(parameters.moveDirection);
+        }
     }
 
     //only called when value is changed or something

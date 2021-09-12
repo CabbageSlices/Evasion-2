@@ -57,6 +57,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2885881478643413311, guid: a3c56330ce1ce6b4a9bbc444e7b05168, type: 3}
       propertyPath: m_MotionType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2885881478643413311, guid: a3c56330ce1ce6b4a9bbc444e7b05168, type: 3}
+      propertyPath: m_OverrideDefaultMassDistribution
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4888829921614546156, guid: a3c56330ce1ce6b4a9bbc444e7b05168, type: 3}
@@ -67,5 +71,6 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7067975157625107994, guid: a3c56330ce1ce6b4a9bbc444e7b05168, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a3c56330ce1ce6b4a9bbc444e7b05168, type: 3}

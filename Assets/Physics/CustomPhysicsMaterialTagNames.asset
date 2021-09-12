@@ -15,8 +15,8 @@ MonoBehaviour:
   m_TagNames:
   - Block
   - A Thing
-  - 
-  - 
+  - HorizontalCollider
+  - VerticalCollider
   - 
   - 
   - 

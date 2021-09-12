@@ -139,8 +139,8 @@ MonoBehaviour:
     m_Friction:
       m_Override: 0
       m_Value:
-        Value: 1
-        CombineMode: 2
+        Value: 0
+        CombineMode: 1
     m_Restitution:
       m_Override: 0
       m_Value:

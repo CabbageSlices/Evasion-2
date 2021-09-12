@@ -28,6 +28,7 @@ public class TurnStaticOnCollisionSystem : SystemBase
         buildPhysicsWorldSystem = World.GetOrCreateSystem<BuildPhysicsWorld>();
         ecbs = World.GetOrCreateSystem<EndFixedStepSimulationEntityCommandBufferSystem>();
         exportPhysicsWorld = World.GetOrCreateSystem<ExportPhysicsWorld>();
+        RequireForUpdate(GetEntityQuery(ComponentType.ReadOnly<TagTurnStaticOnCollision>()));
     }
 
     protected override void OnUpdate()
@@ -47,13 +48,13 @@ public class TurnStaticOnCollisionSystem : SystemBase
         ecbs.AddJobHandleForProducer(Dependency);
     }
 
-    [BurstCompile]
+    // [BurstCompile]
     struct CollisionEventTurnStaticJob : ICollisionEventsJob
     {
 
         [ReadOnly]
         public ComponentDataFromEntity<TagTurnStaticOnCollision> entitiesToTurnStatic;
-        
+
         [ReadOnly]
         public ComponentDataFromEntity<TagStatic> staticEntities;
 
@@ -70,7 +71,8 @@ public class TurnStaticOnCollisionSystem : SystemBase
             bool isEntityAStatic = staticEntities.HasComponent(entityA);
             bool isEntityBStatic = staticEntities.HasComponent(entityB);
 
-            if(UnityEngine.Mathf.Abs(collisionEvent.Normal.x) > 0.15) {
+            if (UnityEngine.Mathf.Abs(collisionEvent.Normal.x) > 0.15)
+            {
                 return;
             }
 

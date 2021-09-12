@@ -2,10 +2,14 @@ using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
 
-[DisallowMultipleComponent]
-[GenerateAuthoringComponent]
-public class TagForce2DTetrisPhysics: IComponentData
+//tag used for physicsmass2DconversionSystem
+public class TagForce2DTetrisPhysics : MonoBehaviour
 {
- 
+
+}
+
+public struct TagForce2DTetrisPhysicsComponent : IComponentData
+{
+
 
 }
